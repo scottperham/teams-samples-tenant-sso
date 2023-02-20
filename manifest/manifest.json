@@ -1,0 +1,58 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.12/MicrosoftTeams.schema.json",
+  "version": "1.0.0",
+  "manifestVersion": "1.12",
+  "id": "53f8182f-a8b2-4fe0-a199-c8148d5a24c2",
+  "packageName": "com.package.name",
+  "name": { "short": "SSO sample", "full": "SSO Sample" },
+  "developer": {
+    "name": "Contoso, Inc",
+    "mpnId": "",
+    "websiteUrl": "https://contoso.com",
+    "privacyUrl": "https://contoso.com",
+    "termsOfUseUrl": "https://contoso.com"
+  },
+  "description": {
+    "short": "SSO Sample",
+    "full": "SSO Sample"
+  },
+  "icons": { "outline": "outline.png", "color": "color.png" },
+  "accentColor": "#FFFFFF",
+  "staticTabs": [
+    { "entityId": "conversations", "scopes": ["personal"] },
+    {
+      "entityId": "ef2a50d5-291d-4f7c-a325-9a52428ca991",
+      "name": "SSO Tab",
+      "contentUrl": "https://perham.eu.ngrok.io/StaticViews/index.html",
+      "websiteUrl": "https://perham.eu.ngrok.io/StaticViews/index.html",
+      "scopes": ["personal"]
+    },
+    { "entityId": "about", "scopes": ["personal"] }
+  ],
+  "bots": [
+    {
+      "botId": "bc1ab8bf-d504-42e7-b359-753780888c7a",
+      "scopes": ["personal"],
+      "commandLists": [
+        {
+          "commands": [
+            {
+              "title": "sign in",
+              "description": "Signs in using AAD SSO"
+            }
+          ],
+          "scopes": ["personal"]
+        }
+      ],
+      "isNotificationOnly": false,
+      "supportsCalling": false,
+      "supportsVideo": false,
+      "supportsFiles": false
+    }
+  ],
+  "validDomains": ["perham.eu.ngrok.io", "token.botframework.com"],
+  "webApplicationInfo": {
+    "id": "bc1ab8bf-d504-42e7-b359-753780888c7a",
+    "resource": "api://perham.eu.ngrok.io/botid-bc1ab8bf-d504-42e7-b359-753780888c7a"
+  }
+}

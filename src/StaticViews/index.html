@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Open Positions</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <script src="https://res.cdn.office.net/teams-js/2.8.0/js/MicrosoftTeams.min.js" integrity="sha384-/DJ9oJEFZSpGiUQx9Na5Yb5svOPPqSb3khKxJ/YgoZ2GtrkzWgSTBpESy3LvMPVk" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script type="application/javascript">
+
+        function parseJwt (token) {
+            var base64Url = token.split('.')[1];
+            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+
+            return JSON.parse(jsonPayload);
+        }
+
+        $(async () => {
+            await microsoftTeams.app.initialize();
+
+            var context = await microsoftTeams.app.getContext();
+
+            const beforeAuth_tid = context.user.tenant.id;
+            const beforeAuth_oid = context.user.id;
+
+            $("#before_tid").text(beforeAuth_tid);
+            $("#before_oid").text(beforeAuth_oid);
+        });
+
+        async function doSSO() {
+            var auth = await microsoftTeams.authentication.getAuthToken();
+
+            var authResult = parseJwt(auth);
+
+            const afterAuth_tId = authResult.tid;
+            const afterAuth_oId = authResult.oid;
+
+            $("#after_tid").text(afterAuth_tId);
+            $("#after_oid").text(afterAuth_oId);
+        }
+    </script>
+</head>
+<body dir="ltr" style="font-family: Arial, Helvetica, sans-serif;">
+    <h1>
+        Welcome!
+    </h1>
+    <p>
+        Before single-sign-on ocurred, the values from the context were:
+        <ul>
+            <li>Tenant id: <span id="before_tid"></span></li>
+            <li>Object id: <span id="before_oid"></span></li>
+        </ul>
+    </p>
+    <button onclick="doSSO()">Do SSO</button>
+    <p>
+        After single-sign-on ocurred, the values the token were:
+        <ul>
+            <li>Tenant id: <span id="after_tid"></span></li>
+            <li>Object id: <span id="after_oid"></span></li>
+        </ul>
+    </p>
+</body>
+</html>
